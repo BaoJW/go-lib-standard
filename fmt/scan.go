@@ -8,7 +8,7 @@ package fmt
 
 import (
 	"fmt"
-	"os"
+	"strings"
 )
 
 type Scan struct {
@@ -22,7 +22,7 @@ func (s *Scan) Fscan() (string, error) {
 		married bool
 	)
 
-	_, err := fmt.Fscan(os.Stdin, &name, &age, &married)
+	_, err := fmt.Fscan(strings.NewReader("凌风 26 false"), &name, &age, &married)
 	if err != nil {
 		return "", err
 	}
@@ -38,7 +38,7 @@ func (s *Scan) Fscanf() (string, error) {
 		married bool
 	)
 
-	_, err := fmt.Fscanf(os.Stdin, "%s%d%t", &name, &age, &married)
+	_, err := fmt.Fscanf(strings.NewReader("凌风 26 false"), "%s%d%t", &name, &age, &married)
 	if err != nil {
 		return "", err
 	}
@@ -54,7 +54,7 @@ func (s *Scan) Fscanln() (string, error) {
 		married bool
 	)
 
-	_, err := fmt.Fscanln(os.Stdin, &name, &age, &married)
+	_, err := fmt.Fscanln(strings.NewReader("凌风 26 false"), &name, &age, &married)
 	if err != nil {
 		return "", err
 	}
@@ -113,34 +113,48 @@ func (s *Scan) Scanln() (string, error) {
 }
 
 //Sscan 扫描参数字符串，将连续的空格分隔值存储为连续的参数。换行占据空间。它返回成功扫描的项目数量。如果这小于参数的数量，err 会报告原因。
-func (s *Scan) Sscan() error {
+func (s *Scan) Sscan() (string, error) {
 	var (
 		name string
 		age  int
 	)
 
-	_, err := fmt.Sscan("Kim 22", &name, &age)
-	return err
+	count, err := fmt.Sscan("Kim 22", &name, &age)
+	if err != nil {
+		return "", err
+	}
+
+	return fmt.Sprintf("Sscan 扫描结果 name:%s age:%d, count is: %d", name, age, count), err
+
 }
 
 //Sscanf 扫描参数字符串，将连续的空格分隔值存储为由格式确定的连续参数。它返回成功解析的项目数。输入中的换行符必须与格式中的换行符匹配。
-func (s *Scan) Sscanf() error {
+func (s *Scan) Sscanf() (string, error) {
 	var (
 		name string
 		age  int
 	)
 
-	_, err := fmt.Sscanf("Kim is 22 years old", "%s is %d years old", &name, &age)
-	return err
+	count, err := fmt.Sscanf("Kim is 22 years old", "%s is %d years old", &name, &age)
+	if err != nil {
+		return "", err
+	}
+
+	return fmt.Sprintf("Sscanf 扫描结果 name:%s age:%d, count is: %d", name, age, count), err
+
 }
 
 //Sscanln 与 Sscan 类似，但停止在换行符处进行扫描，并且在最终项目后必须有换行符或 EOF。
-func (s *Scan) Sscanln() error {
+func (s *Scan) Sscanln() (string, error) {
 	var (
 		name string
 		age  int
 	)
 
-	_, err := fmt.Sscanln("Kim 22", &name, &age)
-	return err
+	count, err := fmt.Sscanln("Kim 22", &name, &age)
+	if err != nil {
+		return "", err
+	}
+
+	return fmt.Sprintf("Sscanf 扫描结果 name:%s age:%d, count is: %d", name, age, count), err
 }
