@@ -3,6 +3,7 @@ package fmt
 import "fmt"
 
 //GoStringer 由具有 GoString 方法的任何值实现，该方法定义该值的 Go 语法。GoString 方法用于将作为操作数传递给 ％＃v 格式的值打印出来
+//只要实现了GoString方法，就可以个性化定制打印的格式，可以集成化在打印某些特定的日志上，根据不同的日志内容或者日志等级，打印不同风格的日志内容
 
 //type GoStringer interface {
 //	GoString() string
@@ -29,28 +30,4 @@ func (p Person) GoString() string {
 		return fmt.Sprintf("Person{Name: %q, Age: %d, Addr: &Address{City: %q, State: %q, Country: %q}}", p.Name, int(p.Age), p.Addr.City, p.Addr.State, p.Addr.Country)
 	}
 	return fmt.Sprintf("Person{Name: %q, Age: %d}", p.Name, int(p.Age))
-}
-
-func GostringerModule() {
-	p1 := Person{
-		Name: "Warren",
-		Age:  31,
-		Addr: &Address{
-			City:    "Denver",
-			State:   "CO",
-			Country: "U.S.A.",
-		},
-	}
-	// If GoString() wasn't implemented, the output of `fmt.Printf("%#v", p1)` would be similar to
-	// Person{Name:"Warren", Age:0x1f, Addr:(*main.Address)(0x10448240)}
-	fmt.Printf("%#v\n", p1)
-
-	p2 := Person{
-		Name: "Theia",
-		Age:  4,
-	}
-	// If GoString() wasn't implemented, the output of `fmt.Printf("%#v", p2)` would be similar to
-	// Person{Name:"Theia", Age:0x4, Addr:(*main.Address)(nil)}
-	fmt.Printf("%#v\n", p2)
-
 }

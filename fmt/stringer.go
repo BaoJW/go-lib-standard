@@ -18,11 +18,3 @@ type Animal struct {
 func (a Animal) String() string {
 	return fmt.Sprintf("%v (%d)", a.Name, a.Age)
 }
-
-func StringerModule() {
-	a := Animal{
-		Name: "Gopher",
-		Age:  2,
-	}
-	fmt.Println(a)
-}

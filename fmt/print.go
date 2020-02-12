@@ -11,6 +11,13 @@ import (
 	"os"
 )
 
+/*
+	所有print类方法的底层实现大致都分为三个步骤
+	1. 从pool中获取打印指针，定义打印器
+	2. 打印buf中的内容到标准输出
+	3. 释放内存，将打印指针放回pool中
+*/
+
 type Print struct {
 	buffer []byte
 }
